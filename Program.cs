@@ -1,3 +1,4 @@
+using AppBlog;
 using AppBlog.Data.Abstract;
 using AppBlog.Data.Concrete.EfCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<DataContext>( options =>
 
 builder.Services.AddScoped<IPostRepository , EfPostRepository>();
 builder.Services.AddScoped<IUserRepository , EfUserRepository>();
+builder.Services.AddScoped<ITagRepository ,  EfTagRepository>();
 
 var app = builder.Build();
 
@@ -22,3 +24,4 @@ app.UseStaticFiles();
 app.MapDefaultControllerRoute(); 
 
 app.Run();
+    

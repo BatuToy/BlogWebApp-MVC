@@ -72,3 +72,4 @@ C:\Users\batu_\Desktop\Software_Products\C# Projects\AppBlog\AppBlog\obj\Debug\n
 C:\Users\batu_\Desktop\Software_Products\C# Projects\AppBlog\AppBlog\obj\Debug\net7.0\AppBlog.RazorAssemblyInfo.cs
 C:\Users\batu_\Desktop\Software_Products\C# Projects\AppBlog\AppBlog\bin\Debug\net7.0\libman.json
 C:\Users\batu_\Desktop\Software_Products\C# Projects\AppBlog\AppBlog\bin\Debug\net7.0\AppBlog.staticwebassets.runtime.json
+C:\Users\batu_\Desktop\Software_Products\C# Projects\AppBlog\AppBlog\obj\Debug\net7.0\AppBlog.sourcelink.json
