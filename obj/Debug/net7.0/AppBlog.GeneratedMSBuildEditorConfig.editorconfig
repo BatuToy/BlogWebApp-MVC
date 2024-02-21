@@ -18,8 +18,20 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\batu_\Desktop\Software_Products\C# Projects\AppBlog\AppBlog
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/batu_/Desktop/Software_Products/C\# Projects/AppBlog/AppBlog/Views/Posts/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/batu_/Desktop/Software_Products/C\# Projects/AppBlog/AppBlog/Views/Posts/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/batu_/Desktop/Software_Products/C\# Projects/AppBlog/AppBlog/Views/Shared/Components/NewPost/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcTmV3UG9zdFxEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/batu_/Desktop/Software_Products/C\# Projects/AppBlog/AppBlog/Views/Shared/Components/TagsMenu/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcVGFnc01lbnVcRGVmYXVsdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/batu_/Desktop/Software_Products/C\# Projects/AppBlog/AppBlog/Views/Shared/_Layout.cshtml]

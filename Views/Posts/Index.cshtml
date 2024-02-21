@@ -1,11 +1,11 @@
-﻿@model PostViewModel
+﻿@model List<Post>
 
 
 <div class="row">
     <div class="col-lg-8">
         <div class="bg-white p-4">
             <h1 class="h4 mb-4">Populer Posts</h1>
-            @foreach(var post in Model.Posts)
+            @foreach(var post in Model)
             {
                 <div class="card bg-transparent border-0 mb-3">
                     <div class="row">
@@ -13,9 +13,9 @@
                             <img src="~/img/@post.Image" class="img-fluid rounded" alt="">
                         </div>
                         <div class="col-8">
-                            <h5><a href="#" class="btn-link fw-semibold">@post.Title</a></h5>
+                            <h5><a href="/posts/@post.Url" class="btn-link fw-semibold">@post.Title</a></h5>
                             <p>@post.Content</p>
-                            <a href="#" class="badge bg-danger bg-opacity-80 text-bg-danger mb-2 fw-bold">Web Development</a>
+                            <a href="/" class="badge bg-danger bg-opacity-80 text-bg-danger mb-2 fw-bold">WebDevelopment</a>
                         </div>
                     </div>
                 </div>
@@ -31,21 +31,8 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="cart-title">Tags</h5>
-            </div>
-            <div class="card-body">
-                <ul class="list-inline d-flex flex-wrap gap-2">
-                    @foreach(var Tag in Model.Tags)
-                    {
-                        <li class="list-inline-item">
-                            <a href="#" class="btn btn-outline-secodary btn-sm">@Tag.Text</a>
-                        </li>
-                    }   
-                </ul>
-            </div>
-        </div>       
+        <vc:tags-menu></vc:tags-menu> 
+        <vc:new-post></vc:new-post>          
     </div>
 </div>
 
