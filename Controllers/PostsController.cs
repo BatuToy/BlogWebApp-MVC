@@ -2,6 +2,7 @@
 using AppBlog.Data.Abstract;
 using AppBlog.Data.Concrete.EfCore;
 using AppBlog.Entity;
+using AppBlog.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,15 +28,29 @@ public class PostsController : Controller
             posts = posts.Where(p => p.Tags.Any(t => t.Url == tag));
         }
 
-        return View(await posts.ToListAsync());
+        return View( new PostViewModel{
+            Posts = await posts.ToListAsync()
+    });
     }
     
-
-    public async Task<IActionResult> Details(string url)
+    public async Task<IActionResult> AddComment([FromBody] Comment comment)
     {
-        return View(await _postRepository.GetById(url));
+        return View();
     }
 
+     public async Task<IActionResult> Details(string url)
+        {
+            return View(await _postRepository
+                        .Posts
+                        .Include(x => x.Tags)
+                        .Include(x => x.Comments)
+                        .ThenInclude(p => p.User)
+                        .FirstOrDefaultAsync(p => p.Url == url));
+        }
+
+    
+    
+    
     [HttpGet]
     public async Task<IActionResult> GetById(int id)
     {

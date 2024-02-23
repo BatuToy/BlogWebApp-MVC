@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.IO.Compression;
+using System.Net;
 using AppBlog.Data.Abstract;
 using AppBlog.Entity;
 using Azure;
@@ -29,13 +30,17 @@ public class EfPostRepository : IPostRepository
 
     public async Task<Post> GetById(string url)
     {
-        var post = await _context.Posts.FirstOrDefaultAsync(p => p.Url == url);
+        var post = await _context.Posts
+        .Include(x => x.Tags)
+        .FirstOrDefaultAsync(p => p.Url == url);
         return(post);
     }
 
     public async Task<Post> GetById(int id)
     {
-        var post = await _context.Posts.FirstOrDefaultAsync(p => p.PostId == id);
+        var post = await _context.Posts
+        .Include(p => p.Tags)
+        .FirstOrDefaultAsync(p => p.PostId == id);
         return(post);
     }
 }

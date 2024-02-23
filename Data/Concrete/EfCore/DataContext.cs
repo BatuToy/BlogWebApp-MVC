@@ -12,6 +12,21 @@ public class DataContext : DbContext
 
 
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Comment>()
+        .HasOne(c => c.User)
+        .WithMany(u => u.Comments)
+        .HasForeignKey(c => c.UserId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+
+    base.OnModelCreating(modelBuilder);
+}
+
+
+
+
 
 
 

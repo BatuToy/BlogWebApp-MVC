@@ -4,3 +4,7 @@ body{
 a{
     text-decoration: none;
 }
+.avatar{
+    height: 40px;   
+    width: 40px;   
+}
