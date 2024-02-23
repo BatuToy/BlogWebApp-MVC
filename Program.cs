@@ -1,6 +1,7 @@
 using AppBlog;
 using AppBlog.Controllers;
 using AppBlog.Data.Abstract;
+using AppBlog.Data.Concrete;
 using AppBlog.Data.Concrete.EfCore;
 using BlogApp.Data.Concrete.EfCore;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<DataContext>( options =>
 builder.Services.AddScoped<IPostRepository , EfPostRepository>();
 builder.Services.AddScoped<IUserRepository , EfUserRepository>();
 builder.Services.AddScoped<ITagRepository ,  EfTagRepository>();
+builder.Services.AddScoped<ICommentRepository , EfCommentRepository>();
 
 var app = builder.Build();
 

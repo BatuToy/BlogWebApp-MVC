@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Ys4n6nOmZci+iPZYzlgSklElo61PBQxNTWeOIhcHbDI=",
+  "Hash": "TjqKYiIF2LF+BXExO95rglNvWwmsdw40dIB4IXTTsqA=",
   "Source": "AppBlog",
   "BasePath": "_content/AppBlog",
   "Mode": "Default",
@@ -91,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\3.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\batu_\\Desktop\\Software_Products\\C# Projects\\AppBlog\\AppBlog\\wwwroot\\img\\avatar.jpg",
+      "SourceId": "AppBlog",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\batu_\\Desktop\\Software_Products\\C# Projects\\AppBlog\\AppBlog\\wwwroot\\",
+      "BasePath": "_content/AppBlog",
+      "RelativePath": "img/avatar.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\avatar.jpg"
     },
     {
       "Identity": "C:\\Users\\batu_\\Desktop\\Software_Products\\C# Projects\\AppBlog\\AppBlog\\wwwroot\\img\\p1.jpg",

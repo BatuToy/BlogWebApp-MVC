@@ -12,10 +12,12 @@ namespace AppBlog.Controllers;
 public class PostsController : Controller
 {
     private readonly IPostRepository _postRepository;
+    private readonly ICommentRepository _commentRepository;
   
-    public PostsController(IPostRepository postRepository)
+    public PostsController(IPostRepository postRepository , ICommentRepository commentRepository)
     {
         _postRepository = postRepository;
+        _commentRepository = commentRepository;
     }
 
 
@@ -33,9 +35,20 @@ public class PostsController : Controller
     });
     }
     
-    public async Task<IActionResult> AddComment([FromBody] Comment comment)
+    public IActionResult AddComment(int PostId , string UserName , string Text , string Url)
     {
-        return View();
+        var comment = new Comment {
+            PostId = PostId,
+            Text = Text,
+            PublishedOn = DateTime.Now,
+            User = new User {
+                UserName = UserName ,
+                Image = "avatar.jpg"
+            }
+        };
+        _commentRepository.CreateCustomer(comment);
+        //return Redirect("/posts/details/" + Url);
+        return RedirectToRoute("post_details" , new {url = Url});
     }
 
      public async Task<IActionResult> Details(string url)

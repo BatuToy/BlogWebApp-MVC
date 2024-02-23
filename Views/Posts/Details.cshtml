@@ -32,21 +32,22 @@
                             </div>
                         </div>  
                     }
-                    <h5>Add Comment</h5>
-                    <form action="posts/AddComment" method="post">
-                        <input type="hidden" name="PostId" value="@Model.PostId">
-                        <div class="mb-3">
-                            <label for="UserName" class="form-label">UserName</label>
-                            <input type="text" name="UserName" id = "UserName" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="Text" class="form-label">Comment</label>
-                            <textarea type="text" name="Text" id="Text" class="form-control"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <button type="submit">Comment</button>
-                        </div>
-                    </form>
+                        <h4 class="mb-3">Yorum Ekle</h4>
+                        <form action="/posts/AddComment" method="post">
+                            <input type="hidden" name="PostId" value="@Model.PostId">
+                            <input type="hidden" name="Url" value="@Model.Url">
+                            <div class="mb-3">
+                                <label for="UserName" class="form-label">UserName</label>
+                                <input type="text" name="UserName" id="UserName" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Text" class="form-label">Yorum</label>
+                                <textarea type="text" name="Text" id="Text" rows="3" class="form-control"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary">Comment</button>
+                            </div>
+                        </form>
                 </div>
             </div>
         </div>
