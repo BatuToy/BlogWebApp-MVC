@@ -9,5 +9,5 @@ public interface ICommentRepository
     
     //Task<Comment> CreateComment([FromBody] Comment comment);
 
-    void CreateCustomer(Comment comment); 
+    void CreateComment(Comment comment); 
 }

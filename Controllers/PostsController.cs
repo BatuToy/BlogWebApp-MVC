@@ -1,8 +1,10 @@
 ﻿using System.Net;
+using System.Security.Claims;
 using AppBlog.Data.Abstract;
 using AppBlog.Data.Concrete.EfCore;
 using AppBlog.Entity;
 using AppBlog.Models;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +24,7 @@ public class PostsController : Controller
 
 
     public async Task<IActionResult> Index(string tag){
-        
+        var claims = User.Claims;
         var posts =  _postRepository.Posts;
         
         if(!string.IsNullOrEmpty(tag))
@@ -34,22 +36,37 @@ public class PostsController : Controller
             Posts = await posts.ToListAsync()
     });
     }
-    
-    public IActionResult AddComment(int PostId , string UserName , string Text , string Url)
+    [HttpPost]    
+    public JsonResult AddComment(int PostId  , string Text)
     {
+        var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var UserName = User.FindFirstValue(ClaimTypes.Name);
+        var Image = User.FindFirstValue(ClaimTypes.UserData);
+
         var comment = new Comment {
             PostId = PostId,
             Text = Text,
             PublishedOn = DateTime.Now,
-            User = new User {
-                UserName = UserName ,
-                Image = "avatar.jpg"
-            }
+            UserId = int.Parse(UserId ?? "")
         };
-        _commentRepository.CreateCustomer(comment);
+
+        _commentRepository.CreateComment(comment);
+        
         //return Redirect("/posts/details/" + Url);
-        return RedirectToRoute("post_details" , new {url = Url});
+        //return RedirectToRoute("post_details" , new {url = Url});
+        
+        return Json ( new {
+            UserName,
+            Text ,
+            comment.PublishedOn ,
+            Image 
+        });
     }
+
+
+
+
+
 
      public async Task<IActionResult> Details(string url)
         {

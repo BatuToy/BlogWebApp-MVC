@@ -15,7 +15,7 @@ public class EfCommentRepository : ICommentRepository
     }
     public IQueryable<Comment> Comments => _context.Comments;
 
-    public void CreateCustomer(Comment comment)
+    public void CreateComment(Comment comment)
     {
         _context.Comments.Add(comment);
         _context.SaveChanges();

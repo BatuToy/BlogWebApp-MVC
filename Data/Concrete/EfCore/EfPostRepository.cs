@@ -19,6 +19,7 @@ public class EfPostRepository : IPostRepository
         _context = context;
     }
 
+    public DbSet<Post> posts;
     public IQueryable<Post> Posts => _context.Posts;
 
     public async Task<Post> CreatePost([FromBody]Post post)

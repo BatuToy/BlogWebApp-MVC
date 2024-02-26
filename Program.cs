@@ -4,6 +4,7 @@ using AppBlog.Data.Abstract;
 using AppBlog.Data.Concrete;
 using AppBlog.Data.Concrete.EfCore;
 using BlogApp.Data.Concrete.EfCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,9 +20,15 @@ builder.Services.AddScoped<IUserRepository , EfUserRepository>();
 builder.Services.AddScoped<ITagRepository ,  EfTagRepository>();
 builder.Services.AddScoped<ICommentRepository , EfCommentRepository>();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
 var app = builder.Build();
 
 SeedData.GetTestData(app);
+
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseStaticFiles();
 

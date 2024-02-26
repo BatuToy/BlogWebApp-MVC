@@ -1,4 +1,5 @@
 ﻿using AppBlog.Entity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AppBlog.Data.Abstract;
 
@@ -6,5 +7,5 @@ public interface IUserRepository
 {
     IQueryable<User> Users { get; }
 
-    void GetUsers();
+    Task<User> CreateUser([FromBody] User user);
 }

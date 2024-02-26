@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppBlog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240223153612_InitialCreate")]
+    [Migration("20240226133938_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -120,8 +120,17 @@ namespace AppBlog.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
