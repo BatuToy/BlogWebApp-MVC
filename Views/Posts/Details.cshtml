@@ -11,7 +11,7 @@
                 } 
             </div>
             <img src="~/img/@Model.Image" class="img-fluid rounded" alt="">
-            <div>@Model.Content</div>            
+            <div>@Html.Raw(@Model.Content)</div>            
         </div>
         <div class="bg-white mt-3">
             <div class="card border-0">
@@ -54,7 +54,7 @@
                     }
                     else
                     {
-                        <p>Login for COMMENT ! <a href="/users/login">Login</a></p>
+                        <p>Login for COMMENT ! <a href="/users/login" class="fw-bolder">Login</a></p>
                     }
                    
                 </div>

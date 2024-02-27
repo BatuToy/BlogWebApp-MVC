@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace AppBlog.Data.Concrete.EfCore;
 
@@ -37,12 +38,29 @@ public class EfPostRepository : IPostRepository
         return(post);
     }
 
+    
     public async Task<Post> GetById(int id)
     {
         var post = await _context.Posts
         .Include(p => p.Tags)
         .FirstOrDefaultAsync(p => p.PostId == id);
         return(post);
+    }
+
+    public void UpdatePost([FromBody] Post post)
+    {
+        var entity = _context.Posts.FirstOrDefault( p => p.PostId == post.PostId);
+
+        if(entity != null)
+        {
+            entity.Title = post.Title;
+            entity.Content = post.Content;
+            entity.Description = post.Description;
+            entity.Url = post.Url;
+            entity.IsActive = post.IsActive;
+
+            _context.SaveChangesAsync();
+        } 
     }
 }
     
