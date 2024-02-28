@@ -33,7 +33,7 @@ namespace BlogApp.Data.Concrete.EfCore
                 {
                     context.Users.AddRange(
                         new User { UserName = "sadikturan" , Image = "p1.jpg", Email = "info@sadikturan.com" , Name = "Sadık Turan" , Password = "123456"},
-                        new User { UserName = "çınarturan" , Image = "p2.jpg", Email = "info@çinarturan.com" , Name = "Çınar Turan" , Password = "123456"}
+                        new User { UserName = "çınarturan" , Image = "p2.jpg", Email = "info@cinarturan.com" , Name = "Çınar Turan" , Password = "123456"}
                     );
                     context.SaveChanges();
                 }

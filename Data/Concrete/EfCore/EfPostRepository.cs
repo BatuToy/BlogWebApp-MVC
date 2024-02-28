@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update.Internal;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AppBlog.Data.Concrete.EfCore;
 
@@ -47,9 +48,9 @@ public class EfPostRepository : IPostRepository
         return(post);
     }
 
-    public void UpdatePost([FromBody] Post post)
+    public void UpdatePost([FromBody] Post post , int [] tagIds) 
     {
-        var entity = _context.Posts.FirstOrDefault( p => p.PostId == post.PostId);
+        var entity = _context.Posts.Include( x => x.Tags).FirstOrDefault( p => p.PostId == post.PostId);
 
         if(entity != null)
         {
@@ -59,8 +60,13 @@ public class EfPostRepository : IPostRepository
             entity.Url = post.Url;
             entity.IsActive = post.IsActive;
 
-            _context.SaveChangesAsync();
+            entity.Tags = _context.Tags.Where( tag => tagIds.Contains(tag.TagId)).ToList();
+
+          _context.SaveChangesAsync();
         } 
+        
     }
+
+    
 }
     

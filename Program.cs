@@ -5,6 +5,7 @@ using AppBlog.Data.Concrete;
 using AppBlog.Data.Concrete.EfCore;
 using BlogApp.Data.Concrete.EfCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +46,13 @@ app.MapControllerRoute(
     pattern : "posts/details/{url}",
     defaults : new {controller = "Posts" , action = "Details"}
 );
+
+app.MapControllerRoute(
+    name : "profile" ,
+    pattern : "profile/{username}" ,
+    defaults : new {Controller = "Users" , Action = "Profile"}
+);
+
 
 app.MapControllerRoute(
     name : "default",

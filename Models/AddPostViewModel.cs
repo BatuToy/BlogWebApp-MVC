@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AppBlog.Entity;
 
 namespace AppBlog.Models;
 
@@ -21,5 +22,9 @@ public class AddPostViewModel
     [Required]
     [Display(Name = "Url")]
     public string?  Url { get; set; }
+
+    public List<Tag>? Tags { get; set; } = new List<Tag>();
+
+    public int[]? TagIds { get; set; }
 
 }

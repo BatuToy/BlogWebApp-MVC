@@ -1,5 +1,6 @@
 ﻿using AppBlog.Data.Concrete.EfCore;
 using AppBlog.Entity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AppBlog;
 
@@ -11,14 +12,12 @@ public class EfTagRepository : ITagRepository
         _context = context;
     }
 
-
     public IQueryable<Tag> Tags => _context.Tags;
 
-    public void CreateTag(Tag tag)
+    public async Task<Tag> CreateTag([FromBody] Tag tag)
     {
-        _context.Add(tag);
-        _context.SaveChanges();
+        await _context.AddAsync(tag);
+        await _context.SaveChangesAsync();
+        return(tag);
     }
-
-    
 }

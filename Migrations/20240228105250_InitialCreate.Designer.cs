@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppBlog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240227124806_InitialCreate")]
+    [Migration("20240228105250_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -127,7 +127,6 @@ namespace AppBlog.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

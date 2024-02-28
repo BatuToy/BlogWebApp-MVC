@@ -1,4 +1,5 @@
 ﻿using AppBlog.Entity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AppBlog;
 
@@ -6,5 +7,5 @@ public interface ITagRepository
 {
     IQueryable<Tag> Tags{get;}
 
-    void CreateTag(Tag tag);
+    Task<Tag> CreateTag([FromBody] Tag tag);
 }

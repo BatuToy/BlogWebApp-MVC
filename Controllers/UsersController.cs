@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
-    namespace AppBlog.Controllers;
+namespace AppBlog.Controllers;
 
     public class UsersController : Controller
     {  
@@ -35,6 +36,23 @@ using Microsoft.EntityFrameworkCore;
             return View();
         }
         
+
+        public IActionResult Profile(string username)
+        {
+            if(username.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+            var user = _userRepository
+                                      .Users
+                                      .Include( x => x.Posts)
+                                      .Include( x => x.Comments)
+                                      .ThenInclude( x => x.Post)
+                                      .FirstOrDefault( x => x.UserName == username);  
+            return View(user);
+        }
+
+
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -72,7 +90,7 @@ using Microsoft.EntityFrameworkCore;
 
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login([FromBody]LoginViewModel model)
         {
             if(ModelState.IsValid)  
             {
@@ -85,13 +103,9 @@ using Microsoft.EntityFrameworkCore;
                     userClaims.Add(new Claim(ClaimTypes.NameIdentifier, isUser.UserId.ToString()));
                     userClaims.Add(new Claim(ClaimTypes.Name, isUser.UserName ?? ""));
                     userClaims.Add(new Claim(ClaimTypes.GivenName, isUser.Name ?? ""));
-                    userClaims.Add(new Claim(ClaimTypes.UserData , isUser.Image));
+                    userClaims.Add(new Claim(ClaimTypes.UserData , isUser.Image ?? ""));
 
                     if(isUser.Email == "info@sadikturan.com")
-                    {
-                        userClaims.Add(new Claim(ClaimTypes.Role, "admin"));
-                    } 
-                    if(isUser.Email == "batu_toy@hotmail.com")
                     {
                         userClaims.Add(new Claim(ClaimTypes.Role, "admin"));
                     } 

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,11 +19,13 @@ public class PostsController : Controller
 {
     private readonly IPostRepository _postRepository;
     private readonly ICommentRepository _commentRepository;
+    private readonly ITagRepository _tagRepository;
   
-    public PostsController(IPostRepository postRepository , ICommentRepository commentRepository)
+    public PostsController(IPostRepository postRepository , ICommentRepository commentRepository , ITagRepository tagRepository)
     {
         _postRepository = postRepository;
         _commentRepository = commentRepository;
+        _tagRepository = tagRepository;
     }
 
 
@@ -55,6 +58,7 @@ public class PostsController : Controller
     {
         return View(await _postRepository
                         .Posts
+                        .Include(x => x.User)
                         .Include(x => x.Tags)
                         .Include(x => x.Comments)
                         .ThenInclude(p => p.User)
@@ -67,6 +71,7 @@ public class PostsController : Controller
         var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var UserName = User.FindFirstValue(ClaimTypes.Name);
         var Image = User.FindFirstValue(ClaimTypes.UserData);
+        var NameSirName = User.FindFirstValue(ClaimTypes.GivenName ?? "");
 
         var comment = new Comment {
             PostId = PostId,
@@ -78,6 +83,7 @@ public class PostsController : Controller
         //return Redirect("/posts/details/" + Url);
         //return RedirectToRoute("post_details" , new {url = Url});
         return Json ( new {
+            NameSirName,
             UserName,
             Text ,
             comment.PublishedOn ,
@@ -112,47 +118,51 @@ public class PostsController : Controller
     }
 
     [Authorize]
-    public ActionResult EditPost(int? id)
+    public IActionResult EditPost(int? id)
     {
         if(id == null)
         {
             return NotFound();
         }
-        var post = _postRepository.Posts.FirstOrDefault( p => p.PostId == id);
+        var post = _postRepository.Posts.Include(x => x.Tags).FirstOrDefault( p => p.PostId == id);
         if(post is null)
         {
             return NotFound();
         }
+
+        ViewBag.Tags = _tagRepository.Tags.ToList();
+
         return View( new AddPostViewModel {
             PostId = post.PostId ,
             Title = post.Title ,
             Content = post.Content ,
             Description = post.Description ,
             Url = post.Url ,
-            isActive = post.IsActive
+            isActive = post.IsActive,
+            Tags = post.Tags
         });
     }
 
     [Authorize]
     [HttpPost]
-    public IActionResult EditPost(AddPostViewModel model)
+    public IActionResult EditPost(AddPostViewModel model , int[] tagIds)
     {
         if (ModelState.IsValid)
         {
-            var UdpateEntity = new Post
+            var UpdateEntity = new Post
             {
                 PostId = model.PostId,
                 Title = model.Title,
                 Content = model.Content,
                 Description = model.Description,
                 Url = model.Url,
-                IsActive = model.isActive
+                IsActive = model.isActive,
             };
 
-            _postRepository.UpdatePost(UdpateEntity);
+            _postRepository.UpdatePost(UpdateEntity , tagIds);
             return RedirectToAction("List");
         }
-
+        ViewBag.Tags = _tagRepository.Tags.ToList();
         return View(model);
     }
 
