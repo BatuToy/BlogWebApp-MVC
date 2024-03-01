@@ -97,14 +97,14 @@ public class PostsController : Controller
     {
         if(ModelState.IsValid)
         {
-            var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var UserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "");
 
             await _postRepository.CreatePost(
                 new Post {
                     Title = model.Title ,
                     Content = model.Content ,
                     Description = model.Description ,
-                    UserId = int.Parse(UserId ?? "") ,
+                    UserId =  UserId ,
                     Image = "1.jpg" ,
                     Url = model.Url ,
                     PublishedOn = DateTime.UtcNow ,
@@ -118,13 +118,11 @@ public class PostsController : Controller
     }
 
     [Authorize]
-    public IActionResult EditPost(int? id)
+    public IActionResult EditPost(int id)
     {
-        if(id == null)
-        {
-            return NotFound();
-        }
+
         var post = _postRepository.Posts.Include(x => x.Tags).FirstOrDefault( p => p.PostId == id);
+        
         if(post is null)
         {
             return NotFound();
@@ -143,7 +141,7 @@ public class PostsController : Controller
         });
     }
 
-    [Authorize]
+    
     [HttpPost]
     public IActionResult EditPost(AddPostViewModel model , int[] tagIds)
     {
@@ -182,13 +180,6 @@ public class PostsController : Controller
         return View(await post.ToListAsync());
     }
 
-    
-    [HttpGet]
-    public async Task<IActionResult> GetById(int id)
-    {
-        var post = await _postRepository.GetById(id);
-        return Ok(post);
-    }
 
     [HttpGet]
     public async Task<IActionResult> GetAllPosts()

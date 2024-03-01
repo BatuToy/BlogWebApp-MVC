@@ -20,40 +20,40 @@ public class EfPostRepository : IPostRepository
     {
         _context = context;
     }
-
-    public DbSet<Post> posts;
     public IQueryable<Post> Posts => _context.Posts;
 
-    public async Task<Post> CreatePost([FromBody]Post post)
+
+    public void GetById(string url)
+    {
+        var post = _context.Posts
+        .Include(x => x.Tags)
+        .FirstOrDefault(p => p.Url == url);
+    }
+
+    public void GetById(int id)
+    {
+        var post = _context.Posts 
+                .Include(p => p.Tags)
+                .FirstOrDefault(p => p.PostId == id);
+
+    }
+
+    public async Task<Post> CreatePost(Post post)
     {
         await _context.Posts.AddAsync(post);
         await _context.SaveChangesAsync();
         return(post);
     }
 
-    public async Task<Post> GetById(string url)
+    public void UpdatePost(Post post , int [] tagIds) 
     {
-        var post = await _context.Posts
-        .Include(x => x.Tags)
-        .FirstOrDefaultAsync(p => p.Url == url);
-        return(post);
-    }
 
-    
-    public async Task<Post> GetById(int id)
-    {
-        var post = await _context.Posts
-        .Include(p => p.Tags)
-        .FirstOrDefaultAsync(p => p.PostId == id);
-        return(post);
-    }
-
-    public void UpdatePost([FromBody] Post post , int [] tagIds) 
-    {
-        var entity = _context.Posts.Include( x => x.Tags).FirstOrDefault( p => p.PostId == post.PostId);
+        var entity = _context.Posts.Include( x => x.Tags)
+                            .FirstOrDefault( p => p.PostId == post.PostId);
 
         if(entity != null)
         {
+            
             entity.Title = post.Title;
             entity.Content = post.Content;
             entity.Description = post.Description;
@@ -62,11 +62,11 @@ public class EfPostRepository : IPostRepository
 
             entity.Tags = _context.Tags.Where( tag => tagIds.Contains(tag.TagId)).ToList();
 
-          _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
+
         } 
         
     }
 
-    
 }
     
